@@ -18,6 +18,7 @@ export default function App() {
             fontSize: 15,
             marginBottom: 20,
             padding: 0,
+            fontWeight:'bold'
           },
           activeTintColor: 'white',
           inactiveTintColor: 'black',
@@ -27,7 +28,7 @@ export default function App() {
       >
         <Tab.Screen name="Home" component={Home}></Tab.Screen>
         <Tab.Screen name="Medicine List" component={MedList}></Tab.Screen>
-        <Tab.Screen name="Update Medicines" component={EditList}></Tab.Screen>
+        <Tab.Screen name="Edit Medicines" component={EditList}></Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
 
