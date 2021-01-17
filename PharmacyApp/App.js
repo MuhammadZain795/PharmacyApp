@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
-import { StyleSheet, Text, View } from 'react-native';
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Home from './app/screens/Home';
 import MedList from './app/screens/MedList';
+import EditList from './app/screens/EditList';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Stack=createStackNavigator();
+const Tab=createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home}></Stack.Screen>
-        <Stack.Screen name="Medicine List" component={MedList}></Stack.Screen>
-      </Stack.Navigator>
+      <Tab.Navigator initialRouteName="Home"
+        tabBarOptions={{
+          labelStyle: {
+            fontSize: 15,
+            marginBottom: 20,
+            padding: 0,
+          },
+          activeTintColor: 'white',
+          inactiveTintColor: 'black',
+          activeBackgroundColor:'black',
+          inactiveBackgroundColor:'white'
+        }}
+      >
+        <Tab.Screen name="Home" component={Home}></Tab.Screen>
+        <Tab.Screen name="Medicine List" component={MedList}></Tab.Screen>
+        <Tab.Screen name="Update Medicines" component={EditList}></Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer>
 
   );

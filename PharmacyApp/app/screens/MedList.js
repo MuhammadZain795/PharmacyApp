@@ -1,12 +1,21 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, ImageBackground, StyleSheet, Button } from 'react-native';
 
-function MedList(props) {
+function MedList({navigation}) {
     return (
-        <Text>
-            Medicine List
-        </Text>
+        <ImageBackground
+            style={styles.background}
+            source={require("../assets/bgPic.jpg")}>
+            <Text>
+                Medicine List will be displayed here...
+            </Text>
+        </ImageBackground>
     );
 }
 
+const styles = StyleSheet.create({
+    background:{
+        flex:1
+    }
+})
 export default MedList;
