@@ -2,6 +2,7 @@ import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import React , {useEffect, useState} from 'react';
 import './App.css';
 import db from './firebase';
+import firebase from 'firebase';
 
 function App() {
   const [medicines, setMedicines]=useState([]);
@@ -9,7 +10,7 @@ function App() {
 
 
   useEffect(() => {
-    db.collection('medicines').onSnapshot(snapshot => {
+    db.collection('medicines').orderBy('timestamp','desc').onSnapshot(snapshot => {
       setMedicines(snapshot.docs.map(doc => doc.data().medicine))
     })
 
@@ -17,19 +18,18 @@ function App() {
 
   // useEffect(()=>{
   //   db.collection('medicines').orderBy('timestamp','desc').onSnapshot(snapshot=>{
-  //     setMedicines(snapshot.docs.map(doc=> ({id: doc.id ,todo: doc.data().task})))
+  //     setMedicines(snapshot.docs.map(doc=> ({id: doc.id ,medicine: doc.data().medicine})))
   //   })
   // }, []);
 
   const addMedicine=(event)=>{
     //to prevent refreshing of the page on clicking enter...
     event.preventDefault();
-    // db.collection('todos').add({
-    //   task:input,
-    //   timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    // })
-
-    setMedicines([...medicines, input])
+    db.collection('medicines').add({
+      medicine:input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    // setMedicines([...medicines, input])
     setInput('')
   }
 
