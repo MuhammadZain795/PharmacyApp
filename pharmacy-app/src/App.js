@@ -1,14 +1,23 @@
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import React , {useEffect, useState} from 'react';
 import './App.css';
+import db from './firebase';
 
 function App() {
   const [medicines, setMedicines]=useState([]);
   const [input, setInput]=useState('');
 
+
+  useEffect(() => {
+    db.collection('medicines').onSnapshot(snapshot => {
+      setMedicines(snapshot.docs.map(doc => doc.data().medicine))
+    })
+
+  }, []);
+
   // useEffect(()=>{
-  //   db.collection('todos').orderBy('timestamp','desc').onSnapshot(snapshot=>{
-  //     setTodos(snapshot.docs.map(doc=> ({id: doc.id ,todo: doc.data().task})))
+  //   db.collection('medicines').orderBy('timestamp','desc').onSnapshot(snapshot=>{
+  //     setMedicines(snapshot.docs.map(doc=> ({id: doc.id ,todo: doc.data().task})))
   //   })
   // }, []);
 
