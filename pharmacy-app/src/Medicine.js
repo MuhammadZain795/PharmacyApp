@@ -56,6 +56,12 @@ function Medicine(props) {
     };
 
     const updateMedicine=()=>{
+
+        db.collection('medicines').doc(props.medicine.id).set({
+            medicine: inputMed,
+            price: inputPrice,
+            count: inputCount
+        }, {merge:true})
         setOpenModal(!openModal);
     }
   
@@ -69,18 +75,18 @@ function Medicine(props) {
                 <h1>I am Modal</h1>
                 <form>
                 <FormControl>
-                    <InputLabel>Name</InputLabel>
+                    <InputLabel>{props.medicine.medicine}</InputLabel>
                     <Input value={inputMed} onChange={event=>setInputMed(event.target.value)}/>
                     </FormControl>
                     <FormControl>
-                    <InputLabel>Price</InputLabel>
+                    <InputLabel>{props.medicine.price}</InputLabel>
                     <Input value={inputPrice} type="number" onChange={event=>setInputPrice(event.target.value)}/>
                     </FormControl>
                     <FormControl>
-                    <InputLabel>Count</InputLabel>
+                    <InputLabel>{props.medicine.count}</InputLabel>
                     <Input value={inputCount} type="number" onChange={event=>setInputCount(event.target.value)}/>
                 </FormControl>
-                <Button disabled={!inputMed} disabled={!inputPrice} disabled={!inputCount}  type="submit" onClick={handleOpne} variant="contained" color="primary">
+                <Button disabled={!inputMed} disabled={!inputPrice} disabled={!inputCount}  type="submit" onClick={updateMedicine} variant="contained" color="primary">
                 Update
                 </Button>
             </form>
