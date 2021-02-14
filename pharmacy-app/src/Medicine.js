@@ -10,7 +10,19 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { Button, ListItemIcon, Modal } from '@material-ui/core';
+import { Button, ListItemIcon, Modal, FormControl, InputLabel, Input } from '@material-ui/core';
+
+
+const useStylesModal = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,8 +36,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Medicine(props) {
     const classes = useStyles();
+    const classesModal = useStylesModal();
     const [open, setOpen] = React.useState(false);
     const [openModal, setOpenModal]=useState(false);
+    const [inputMed, setInputMed]=useState('');
+    const [inputPrice, setInputPrice]=useState('');
+    const [inputCount, setInputCount]=useState('');
 
     const handleClick = () => {
       setOpen(!open);
@@ -38,6 +54,10 @@ function Medicine(props) {
     const handleOpne=()=>{
         setOpenModal(!openModal);
     };
+
+    const updateMedicine=()=>{
+        setOpenModal(!openModal);
+    }
   
     return (
         <>
@@ -45,12 +65,28 @@ function Medicine(props) {
             open={openModal}
             onClose={handleOpne}
         >
-            <div>
-                <h1>open</h1>
-                <button onClick={handleOpne}>Modal</button>
+            <div className={classesModal.paper}>
+                <h1>I am Modal</h1>
+                <form>
+                <FormControl>
+                    <InputLabel>Name</InputLabel>
+                    <Input value={inputMed} onChange={event=>setInputMed(event.target.value)}/>
+                    </FormControl>
+                    <FormControl>
+                    <InputLabel>Price</InputLabel>
+                    <Input value={inputPrice} type="number" onChange={event=>setInputPrice(event.target.value)}/>
+                    </FormControl>
+                    <FormControl>
+                    <InputLabel>Count</InputLabel>
+                    <Input value={inputCount} type="number" onChange={event=>setInputCount(event.target.value)}/>
+                </FormControl>
+                <Button disabled={!inputMed} disabled={!inputPrice} disabled={!inputCount}  type="submit" onClick={handleOpne} variant="contained" color="primary">
+                Update
+                </Button>
+            </form>
             </div>
         </Modal>
-      <List className={classes.root}>
+        <List className={classes.root}>
         <ListItem button onClick={handleClick}>
           <ListItemText primary={props.medicine.medicine} />
           {open ? <ExpandLess /> : <ExpandMore />}
