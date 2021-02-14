@@ -13,7 +13,7 @@ function App() {
 
   useEffect(()=>{
     db.collection('medicines').orderBy('timestamp','desc').onSnapshot(snapshot=>{
-      setMedicines(snapshot.docs.map(doc=> ({id: doc.id ,medicine: doc.data().medicine})))
+      setMedicines(snapshot.docs.map(doc=> ({id: doc.id ,medicine: doc.data().medicine, price: doc.data().price, count: doc.data().count})))
     })
   }, []);
 
