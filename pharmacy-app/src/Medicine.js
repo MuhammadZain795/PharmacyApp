@@ -2,18 +2,15 @@
 import db from './firebase';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import { Button, ListItemIcon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Medicine(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
   
     const handleClick = () => {
       setOpen(!open);
@@ -42,8 +39,14 @@ function Medicine(props) {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className={classes.nested}>
-              <ListItemText primary={props.medicine.price} />
+              <ListItemText primary={props.medicine.price} secondary={props.medicine.count} />
             </ListItem>
+            <ListItemIcon>
+                <EditIcon onClick={event => {db.collection('medicines').doc(props.medicine.id).delete()}}/>
+            </ListItemIcon>
+            <ListItemIcon>
+                <DeleteIcon onClick={event => {db.collection('medicines').doc(props.medicine.id).delete()}}/>
+            </ListItemIcon>
           </List>
         </Collapse>
       </List>
