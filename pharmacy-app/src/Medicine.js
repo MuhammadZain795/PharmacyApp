@@ -14,15 +14,15 @@ import { Button, ListItemIcon, Modal, FormControl, InputLabel, Input } from '@ma
 
 
 const useStylesModal = makeStyles((theme) => ({
-    paper: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,64 +35,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Medicine(props) {
-    const classes = useStyles();
-    const classesModal = useStylesModal();
-    const [open, setOpen] = React.useState(false);
-    const [openModal, setOpenModal]=useState(false);
-    const [inputMed, setInputMed]=useState('');
-    const [inputPrice, setInputPrice]=useState('');
-    const [inputCount, setInputCount]=useState('');
+  const classes = useStyles();
+  const classesModal = useStylesModal();
+  const [open, setOpen] = React.useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [inputMed, setInputMed] = useState('');
+  const [inputPrice, setInputPrice] = useState('');
+  const [inputCount, setInputCount] = useState('');
 
-    const handleClick = () => {
-      setOpen(!open);
-    };
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
-    const handleClose = ()=>{
-        setOpenModal(false);
-    };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
-    const handleOpne=()=>{
-        setOpenModal(!openModal);
-    };
+  const handleOpne = () => {
+    setOpenModal(!openModal);
+  };
 
-    const updateMedicine=()=>{
+  const updateMedicine = () => {
 
-        db.collection('medicines').doc(props.medicine.id).set({
-            medicine: inputMed,
-            price: inputPrice,
-            count: inputCount
-        }, {merge:true})
-        setOpenModal(!openModal);
-    }
-  
-    return (
-        <>
-        <Modal
-            open={openModal}
-            onClose={handleOpne}
-        >
-            <div className={classesModal.paper}>
-                <h1>I am Modal</h1>
-                <form>
-                <FormControl>
-                    <InputLabel>{props.medicine.medicine}</InputLabel>
-                    <Input value={inputMed} onChange={event=>setInputMed(event.target.value)}/>
-                    </FormControl>
-                    <FormControl>
-                    <InputLabel>{props.medicine.price}</InputLabel>
-                    <Input value={inputPrice} type="number" onChange={event=>setInputPrice(event.target.value)}/>
-                    </FormControl>
-                    <FormControl>
-                    <InputLabel>{props.medicine.count}</InputLabel>
-                    <Input value={inputCount} type="number" onChange={event=>setInputCount(event.target.value)}/>
-                </FormControl>
-                <Button disabled={!inputMed} disabled={!inputPrice} disabled={!inputCount}  type="submit" onClick={updateMedicine} variant="contained" color="primary">
-                Update
+    db.collection('medicines').doc(props.medicine.id).set({
+      medicine: inputMed,
+      price: inputPrice,
+      count: inputCount
+    }, { merge: true })
+    setOpenModal(!openModal);
+  }
+
+  return (
+    <>
+      <Modal
+        open={openModal}
+        onClose={handleOpne}
+      >
+        <div className={classesModal.paper}>
+          <h1>I am Modal</h1>
+          <form>
+            <FormControl>
+              <InputLabel>{props.medicine.medicine}</InputLabel>
+              <Input value={inputMed} onChange={event => setInputMed(event.target.value)} />
+            </FormControl>
+            <FormControl>
+              <InputLabel>{props.medicine.price}</InputLabel>
+              <Input value={inputPrice} type="number" onChange={event => setInputPrice(event.target.value)} />
+            </FormControl>
+            <FormControl>
+              <InputLabel>{props.medicine.count}</InputLabel>
+              <Input value={inputCount} type="number" onChange={event => setInputCount(event.target.value)} />
+            </FormControl>
+            <Button disabled={!inputMed} disabled={!inputPrice} disabled={!inputCount} type="submit" onClick={updateMedicine} variant="contained" color="primary">
+              Update
                 </Button>
-            </form>
-            </div>
-        </Modal>
-        <List className={classes.root}>
+          </form>
+        </div>
+      </Modal>
+      <List className={classes.root}>
         <ListItem button onClick={handleClick}>
           <ListItemText primary={props.medicine.medicine} />
           {open ? <ExpandLess /> : <ExpandMore />}
@@ -103,16 +103,16 @@ function Medicine(props) {
               <ListItemText primary={props.medicine.price} secondary={props.medicine.count} />
             </ListItem>
             <ListItemIcon>
-                <EditIcon onClick={e => handleOpne(true)}/>
+              <EditIcon onClick={e => handleOpne(true)} />
             </ListItemIcon>
             <ListItemIcon>
-                <DeleteIcon onClick={event => {db.collection('medicines').doc(props.medicine.id).delete()}}/>
+              <DeleteIcon onClick={event => { db.collection('medicines').doc(props.medicine.id).delete() }} />
             </ListItemIcon>
           </List>
         </Collapse>
       </List>
-      </>
-    );
-  }
+    </>
+  );
+}
 
 export default Medicine;
